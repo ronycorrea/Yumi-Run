@@ -1,0 +1,154 @@
+:root {
+  --ink: #2b1b4d;
+  --bg: #ebe5f6;
+  --pur: #7c5cff;
+  --pnk: #ff6fa8;
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #ebe5f6;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #ebe5f6;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  overscroll-behavior: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+#g {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  display: block;
+  image-rendering: pixelated;
+  touch-action: none;
+  cursor: pointer;
+  background: var(--bg);
+}
+.px {
+  box-shadow:
+    0 -4px 0 0 var(--ink),
+    0 4px 0 0 var(--ink),
+    -4px 0 0 0 var(--ink),
+    4px 0 0 0 var(--ink),
+    8px 8px 0 0 rgba(43, 27, 77, 0.28);
+}
+.hang {
+  --w: clamp(230px, 32vw, 440px);
+  position: fixed;
+  z-index: 3;
+  top: env(safe-area-inset-top, 0px);
+  left: 50%;
+  width: var(--w);
+  translate: -50% 0;
+  transform-origin: 50% 0;
+  pointer-events: none;
+  animation: sway 5.5s ease-in-out infinite;
+}
+.hang::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -5px;
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  background: var(--ink);
+  z-index: 2;
+}
+.wires {
+  display: block;
+  width: 100%;
+  height: clamp(46px, 9vh, 84px);
+  overflow: visible;
+}
+.wires path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: square;
+}
+.plate {
+  position: relative;
+  margin: 0 4px;
+  padding: clamp(12px, 2vw, 20px) clamp(14px, 2.4vw, 26px);
+  background: #fff;
+  text-align: center;
+  font:
+    400 clamp(16px, 3vw, 38px)/1.1 "Press Start 2P",
+    monospace;
+  color: var(--pur);
+  text-shadow:
+    3px 3px 0 var(--pnk),
+    6px 6px 0 var(--ink);
+  outline: 2px solid var(--bg);
+  outline-offset: -10px;
+}
+.plate::before,
+.plate::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  width: 8px;
+  height: 8px;
+  background: var(--ink);
+}
+.plate::before {
+  left: calc(8% - 4px);
+}
+.plate::after {
+  right: calc(8% - 4px);
+}
+@keyframes sway {
+  0%,
+  100% {
+    rotate: -2deg;
+  }
+  50% {
+    rotate: 2deg;
+  }
+}
+@keyframes hit {
+  0% {
+    rotate: 9deg;
+  }
+  25% {
+    rotate: -7deg;
+  }
+  50% {
+    rotate: 5deg;
+  }
+  75% {
+    rotate: -3deg;
+  }
+  100% {
+    rotate: 2deg;
+  }
+}
+.hang.hit {
+  animation:
+    hit 0.9s ease-out 1,
+    sway 5.5s ease-in-out 0.9s infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hang,
+  .hang.hit {
+    animation: none;
+  }
+}
